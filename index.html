@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Line-Up</title>
+
+  <!-- Playful fonts from Google -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800&display=swap">
+
+  <!-- Our stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ================= LIVING JUNGLE BACKGROUND ================= -->
+  <div class="scene" aria-hidden="true">
+    <div class="leafbg l1"></div><div class="leafbg l2"></div>
+    <span class="floatleaf f1">🍃</span><span class="floatleaf f2">🍂</span>
+    <span class="floatleaf f3">🍃</span><span class="floatleaf f4">🌿</span>
+    <div class="hills">
+      <span class="flower">🌿</span><span class="flower">🍄</span>
+      <span class="flower">🌷</span><span class="flower">🌻</span>
+    </div>
+  </div>
+
+  <!-- ================= LANDING / WELCOME SCREEN ================= -->
+  <div class="landing show" id="landing">
+    <span class="lnum" style="top:12%;left:7%;background:#6a8bff">1</span>
+    <span class="lnum" style="top:18%;right:9%;background:#ff7b54;animation-delay:.8s">7</span>
+    <span class="lnum" style="bottom:15%;left:12%;background:#ffd23f;color:#5a4800;animation-delay:1.4s">3</span>
+    <span class="lnum" style="bottom:20%;right:11%;background:#4ecb71;animation-delay:.4s">9</span>
+    <span class="lnum" style="top:42%;left:4%;background:#b06bff;animation-delay:1s">5</span>
+    <span class="lnum" style="top:48%;right:4%;background:#36c5d6;animation-delay:.6s">2</span>
+
+    <div class="lInner">
+      <!-- Monkey mascot (drawn with SVG) -->
+      <svg class="lMascot" viewBox="0 0 100 110" aria-hidden="true">
+        <ellipse cx="50" cy="106" rx="24" ry="5" fill="rgba(0,0,0,.12)"/>
+        <path d="M78 86 q18 4 12 -18" stroke="#e4694a" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M32 62 q18 -12 36 0 q10 30 -18 42 q-28 -12 -18 -42Z" fill="#e4694a"/>
+        <ellipse cx="50" cy="88" rx="12" ry="15" fill="#f4bd92"/>
+        <path d="M32 66 q-16 8 -10 26" stroke="#e4694a" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M68 66 q16 8 10 26" stroke="#e4694a" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <circle cx="24" cy="42" r="12" fill="#e4694a"/><circle cx="76" cy="42" r="12" fill="#e4694a"/>
+        <circle cx="24" cy="42" r="6.5" fill="#f4bd92"/><circle cx="76" cy="42" r="6.5" fill="#f4bd92"/>
+        <circle cx="50" cy="44" r="27" fill="#e4694a"/>
+        <path d="M50 30 q19 0 17 20 q-2 17 -17 17 q-15 0 -17 -17 q-2 -20 17 -20Z" fill="#f6d9a6"/>
+        <circle cx="41" cy="41" r="7.5" fill="#fff"/><circle cx="59" cy="41" r="7.5" fill="#fff"/>
+        <circle cx="42" cy="42" r="3.6" fill="#2a2340"/><circle cx="58" cy="42" r="3.6" fill="#2a2340"/>
+        <circle cx="43.3" cy="40.6" r="1.2" fill="#fff"/><circle cx="59.3" cy="40.6" r="1.2" fill="#fff"/>
+        <ellipse cx="46" cy="51" rx="2" ry="1.4" fill="#c98a4a"/><ellipse cx="54" cy="51" rx="2" ry="1.4" fill="#c98a4a"/>
+        <path d="M43 55 q7 7 14 0" stroke="#8a5a22" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      </svg>
+
+      <h1 class="lTitle">🌈 Number Line-Up</h1>
+      <p class="lSub">Arrange the numbers from small to BIG!</p>
+      <p class="lPick">CHOOSE YOUR LEVEL</p>
+      <div class="levels">
+        <button class="lv easy" data-n="4">😀<span class="lvName">Easy</span><span class="lvNum">4 numbers</span></button>
+        <button class="lv med"  data-n="6">😎<span class="lvName">Medium</span><span class="lvNum">6 numbers</span></button>
+        <button class="lv hard" data-n="8">🤓<span class="lvName">Hard</span><span class="lvNum">8 numbers</span></button>
+      </div>
+      <p class="lHint">🔊 Turn up the volume — tap a level to start!</p>
+    </div>
+  </div>
+
+  <!-- ================= GAME SCREEN ================= -->
+  <div class="wrap">
+
+    <!-- Top bar: title, score chips, music & sound buttons -->
+    <div class="hud">
+      <button class="sound" id="back" title="Back to menu" aria-label="Back">←</button>
+      <div class="logo"><span class="rb">🌈</span>Number Line-Up</div>
+      <span class="chip">Moves <b id="moves">0</b></span>
+      <span class="chip">Best <b id="best">—</b></span>
+      <button class="sound" id="music" title="Music on/off" aria-label="Music">🎵</button>
+      <button class="sound" id="sound" title="Sound on/off" aria-label="Sound">🔊</button>
+    </div>
+
+    <!-- Monkey mascot + speech bubble -->
+    <div class="mascotRow">
+      <svg class="mascot" id="mascot" viewBox="0 0 100 110" aria-hidden="true">
+        <ellipse cx="50" cy="106" rx="24" ry="5" fill="rgba(0,0,0,.12)"/>
+        <path d="M78 86 q18 4 12 -18" stroke="#e4694a" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M32 62 q18 -12 36 0 q10 30 -18 42 q-28 -12 -18 -42Z" fill="#e4694a"/>
+        <ellipse cx="50" cy="88" rx="12" ry="15" fill="#f4bd92"/>
+        <path d="M32 66 q-16 8 -10 26" stroke="#e4694a" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M68 66 q16 8 10 26" stroke="#e4694a" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <circle cx="24" cy="42" r="12" fill="#e4694a"/><circle cx="76" cy="42" r="12" fill="#e4694a"/>
+        <circle cx="24" cy="42" r="6.5" fill="#f4bd92"/><circle cx="76" cy="42" r="6.5" fill="#f4bd92"/>
+        <circle cx="50" cy="44" r="27" fill="#e4694a"/>
+        <path d="M50 30 q19 0 17 20 q-2 17 -17 17 q-15 0 -17 -17 q-2 -20 17 -20Z" fill="#f6d9a6"/>
+        <circle cx="41" cy="41" r="7.5" fill="#fff"/><circle cx="59" cy="41" r="7.5" fill="#fff"/>
+        <circle cx="42" cy="42" r="3.6" fill="#2a2340"/><circle cx="58" cy="42" r="3.6" fill="#2a2340"/>
+        <circle cx="43.3" cy="40.6" r="1.2" fill="#fff"/><circle cx="59.3" cy="40.6" r="1.2" fill="#fff"/>
+        <ellipse cx="46" cy="51" rx="2" ry="1.4" fill="#c98a4a"/><ellipse cx="54" cy="51" rx="2" ry="1.4" fill="#c98a4a"/>
+        <path d="M43 55 q7 7 14 0" stroke="#8a5a22" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div class="bubble" id="bubble">Hi! Drag the numbers from small to BIG! 😊</div>
+    </div>
+
+    <!-- Question tracker: grows a garden as you finish questions -->
+    <div class="qwrap">
+      <span class="qlabel" id="qlabel">Question 1</span>
+      <div class="tracker" id="tracker" aria-label="questions"></div>
+    </div>
+
+    <div class="goal"><span>🐣 small</span><span class="arrow"></span><span>BIG 🐘</span></div>
+
+    <!-- The number tiles get added here by JavaScript -->
+    <div class="track" id="track"></div>
+
+    <!-- Progress bar for the current question -->
+    <div class="meter"><i id="meter"></i></div>
+
+    <!-- Bottom controls -->
+    <div class="controls">
+      <button class="sound" id="home" title="Home" aria-label="Home">🏠</button>
+      <div class="seg" id="count" role="group" aria-label="Level">
+        <button data-n="4" aria-pressed="false">😀 Easy</button>
+        <button data-n="6" aria-pressed="true">😎 Medium</button>
+        <button data-n="8" aria-pressed="false">🤓 Hard</button>
+      </div>
+      <button class="btn" id="shuffle">↻ New Numbers</button>
+    </div>
+  </div>
+
+  <!-- ================= WIN POP-UP ================= -->
+  <div class="win" id="win">
+    <div class="wcard">
+      <div class="big">🎉</div>
+      <h3>YAY! You did it!</h3>
+      <p id="wsub">Smallest to biggest — perfect!</p>
+      <button class="btn" id="next">Play again →</button>
+    </div>
+  </div>
+
+  <!-- Canvas used by the confetti library -->
+  <canvas class="fx" id="fx"></canvas>
+
+  <!-- ================= SCRIPTS (load in this order) ================= -->
+  <!-- 1) Confetti library (the only external library) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+  <!-- 2) Our own code, split by job -->
+  <script src="js/audio.js"></script>   <!-- sounds, music, voice -->
+  <script src="js/game.js"></script>    <!-- game logic -->
+  <script src="js/main.js"></script>    <!-- buttons + start the game -->
+</body>
+</html>
